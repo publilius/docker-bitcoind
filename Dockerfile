@@ -10,6 +10,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         gnupg \
     && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install our custom packages
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        vim-nox \
+        less \
+    && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Set variables necessary for download and verification of bitcoind
 ARG TARGETARCH
 ARG ARCH
