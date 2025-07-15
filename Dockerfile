@@ -5,18 +5,10 @@ FROM ubuntu:latest AS builder
 RUN apt-get update \
     && apt-get upgrade -y
 
-RUN apt-get update && \
-        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         ca-certificates \
         wget \
         gnupg \
-    && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Install our custom packages
-RUN apt-get update && \
-        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        vim \
-        less \
     && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set variables necessary for download and verification of bitcoind
@@ -67,6 +59,13 @@ COPY --chown=bitcoin:bitcoin --from=builder /opt/bitcoin/bin/ /usr/local/bin/
 RUN apt-get update \
     && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gosu \
+    && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install our custom packages
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        vim \
+        less \
+        traceroute \
     && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy scripts to Docker image
