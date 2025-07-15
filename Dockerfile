@@ -4,7 +4,9 @@ FROM ubuntu:latest AS builder
 # Upgrade all packages and install dependencies
 RUN apt-get update \
     && apt-get upgrade -y
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+
+RUN apt-get update && \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         ca-certificates \
         wget \
         gnupg \
